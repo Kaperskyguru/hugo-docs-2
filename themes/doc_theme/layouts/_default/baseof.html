@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+  lang="{{ or site.Language.LanguageCode site.Language.Lang }}"
+  dir="{{ or site.Language.LanguageDirection `ltr` }}"
+>
+  <head>
+    {{ partial "head.html" . }}
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#0f172a",
+              secondary: "#0db9e9",
+              tertiary: "#1e293b",
+            },
+          },
+        },
+      };
+
+      // Format our Code snippet
+      document.querySelectorAll("article pre").forEach((element) => {
+        const wrapper = document.createElement("div");
+
+        const header = document.createElement("div");
+        const red = document.createElement("div");
+        const yellow = document.createElement("div");
+        const green = document.createElement("div");
+
+        // Adding CSS classes
+        wrapper.classList.add("custom-highlighter-wrapper");
+        header.classList.add("custom-highlighter-header");
+        green.classList.add("custom-highlighter-green");
+        red.classList.add("custom-highlighter-red");
+        yellow.classList.add("custom-highlighter-yellow");
+
+        element.insertAdjacentElement("beforebegin", wrapper);
+
+        // Appending
+        header.appendChild(red);
+        header.appendChild(yellow);
+        header.appendChild(green);
+
+        wrapper.appendChild(header);
+        wrapper.appendChild(element);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="bg-primary h-scren h-full">
+      <div class="mx-auto h-full px-8 xl:px-0" style="max-width: 1320px">
+        <header>{{ partial "header.html" . }}</header>
+
+        <div class="flex pt-20 relative">
+          <aside
+            id="sidebar"
+            class="w-full hidden w-full lg:block top-[65px] sticky overflow-y-auto border-r-2 border-solid border-tertiary"
+            style="
+              max-width: 250px;
+              height: calc(100vh - 80px);
+              min-width: 280px;
+            "
+          >
+            {{partial "aside.html" . }}
+          </aside>
+
+          <main
+            class="flex-1 h-full lg:px-8 px-0 pb-8"
+            style="max-width: cal(100% - 280px)"
+          >
+            {{ block "main" . }}{{ end }}
+          </main>
+
+          {{if ne .Title "Home"}}
+
+          <div class="pl-2 lg:w-1/5 w-full">
+            <aside
+              id="right"
+              class="w-full lg:block top-[65px] sticky overflow-y-auto"
+              style="
+                max-width: 250px;
+                height: calc(100vh - 80px);
+                min-width: 280px;
+              "
+            >
+              <div
+                id="right-scroll"
+                class="relative text-white pt-3 relative pl-8"
+              >
+                <div
+                  class="absolute h-4 w-1.5 bg-secondary left-0 top-2 z-40"
+                ></div>
+                <h2 class="uppercase font-bold leading-5 text-sm text-[#e99e9]">
+                  On this page
+                </h2>
+                <div class="flex flex-col text-base pl-3 pt-3 leading-5">
+                  {{ .TableOfContents }}
+                </div>
+              </div>
+            </aside>
+          </div>
+          {{end}}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

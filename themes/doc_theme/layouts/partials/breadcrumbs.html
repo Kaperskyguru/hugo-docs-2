@@ -1,0 +1,6 @@
+<div class="flex gap-2 text-gray-500">
+  {{ range .Ancestors.Reverse }} {{if eq .LinkTitle "Home"}}
+  <a href="{{ .RelPermalink }}"> Docs Home</a>/ {{else}}
+  <a href="{{ .RelPermalink }}"> {{.LinkTitle}}</a>/ {{end }} {{ end }}
+  <p class="text-white"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></p>
+</div>

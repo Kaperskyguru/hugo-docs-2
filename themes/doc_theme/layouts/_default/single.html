@@ -1,0 +1,29 @@
+{{ define "main" }}
+
+<main
+  class="flex-1 h-full lg:px-8 px-0 pb-8"
+  style="max-width: cal(100% - 280px)"
+>
+  {{ partial "breadcrumbs.html" . }}
+
+  <div class="text-white pt-6">
+    <h1 class="text-4xl font-bold py-3">{{ .Title }}</h1>
+  </div>
+
+  <div>
+    <article class="leading-6">{{ .Content }}</article>
+  </div>
+
+  {{ partial "pagination.html" . }}
+
+  <div class="border-t py-10 flex justify-end">
+    <p class="text-gray-500 leading-5">
+      This page was last updated on {{ $dateMachine := .Date | time.Format
+      "2006-01-02T15:04:05-07:00" }} {{ $dateHuman := .Date | time.Format
+      ":date_long" }}
+      <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+    </p>
+  </div>
+</main>
+
+{{ end }}
